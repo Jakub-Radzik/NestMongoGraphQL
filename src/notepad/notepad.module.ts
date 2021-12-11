@@ -3,6 +3,6 @@ import { NotepadResolver } from './notepad.resolver';
 import { NotepadService } from './notepad.service';
 
 @Module({
-   providers: [NotepadResolver, NotepadService],
+  providers: [NotepadResolver, NotepadService],
 })
 export class NotepadModule {}

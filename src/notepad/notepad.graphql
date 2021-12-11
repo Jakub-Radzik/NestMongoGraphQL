@@ -1,16 +1,16 @@
 type Notepad {
-   id: ID!
-   title: String
-   content: String
+  id: ID!
+  title: String
+  content: String
 }
 
 type Query {
-   notepad(id: ID!): Notepad
-   notepads: [Notepad]
+  notepad(id: ID!): Notepad
+  notepads: [Notepad]
 }
 
 type Mutations {
-   createNotepad(title: String!, content: String!): Notepad
-   updateNotepad(id: ID!, title: String, content: String): Notepad
-   deleteNotepad(id: ID!): Notepad
+  createNotepad(title: String!, content: String!): Notepad
+  updateNotepad(id: ID!, title: String, content: String): Notepad
+  deleteNotepad(id: ID!): Notepad
 }
