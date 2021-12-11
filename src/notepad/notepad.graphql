@@ -2,15 +2,48 @@ type Notepad {
   id: ID!
   title: String
   content: String
+  pages: [Page]
+}
+
+type Page {
+  id: ID!
+  title: String
+  content: String
+  notepadId: ID!
 }
 
 type Query {
   notepad(id: ID!): Notepad
   notepads: [Notepad]
+  pages(notepadId: ID!): [Page]
 }
 
-type Mutations {
-  createNotepad(title: String!, content: String!): Notepad
+input CreateNotepadInput {
+  title: String
+  content: String
+}
+
+input UpdateNotepadInput {
+  title: String
+  content: String
+}
+
+input CreatePageInput {
+  notepadId: ID!
+  title: String
+}
+
+input UpdatePageInput {
+  title: String
+  content: String
+}
+
+type Mutation {
+  createNotepad(createNotepadInput: CreateNotepadInput): Notepad
   updateNotepad(id: ID!, title: String, content: String): Notepad
   deleteNotepad(id: ID!): Notepad
+
+  createPage(notepadId: ID!, title: String!, content: String!): Page
+  updatePage(id: ID!, title: String, content: String): Page
+  deletePage(id: ID!): Page
 }
