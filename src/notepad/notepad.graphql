@@ -40,10 +40,10 @@ input UpdatePageInput {
 
 type Mutation {
   createNotepad(createNotepadInput: CreateNotepadInput): Notepad
-  updateNotepad(id: ID!, title: String, content: String): Notepad
+  updateNotepad(id: ID!, updateNotepadInput: UpdateNotepadInput): Notepad
   deleteNotepad(id: ID!): Notepad
 
-  createPage(notepadId: ID!, title: String!, content: String!): Page
-  updatePage(id: ID!, title: String, content: String): Page
+  createPage(createPageInput: CreatePageInput): Page
+  updatePage(id: ID!, updatePageInput: UpdatePageInput): Page
   deletePage(id: ID!): Page
 }

@@ -7,7 +7,12 @@ import {
   Parent,
   Mutation,
 } from '@nestjs/graphql';
-import { CreateNotepadInput, Notepad } from 'src/graphql';
+import {
+  CreateNotepadInput,
+  CreatePageInput,
+  Notepad,
+  UpdatePageInput,
+} from 'src/graphql';
 import { NotepadService } from './notepad.service';
 import { PageService } from './page.service';
 
@@ -38,5 +43,36 @@ export class NotepadResolver {
     @Args('createNotepadInput') createNotepadInput: CreateNotepadInput
   ) {
     return this.notepadService.create(createNotepadInput);
+  }
+
+  @Mutation('updateNotepad')
+  async updateNotepad(
+    @Args('id') id: string,
+    @Args('updateNotepadInput') updateNotepadInput: CreateNotepadInput
+  ) {
+    return this.notepadService.update(id, updateNotepadInput);
+  }
+
+  @Mutation('deleteNotepad')
+  async deleteNotepad(@Args('id') id: string) {
+    return this.notepadService.delete(id);
+  }
+
+  @Mutation('createPage')
+  async createPage(@Args('createPageInput') createPageInput: CreatePageInput) {
+    return this.pageService.create(createPageInput);
+  }
+
+  @Mutation('updatePage')
+  async updatePage(
+    @Args('id') id: string,
+    @Args('updatePageInput') updatePageInput: UpdatePageInput
+  ) {
+    return this.pageService.update(id, updatePageInput);
+  }
+
+  @Mutation('deletePage')
+  async deletePage(@Args('id') id: string) {
+    return this.pageService.delete(id);
   }
 }

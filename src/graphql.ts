@@ -58,13 +58,13 @@ export abstract class IMutation {
 
     abstract createNotepad(createNotepadInput?: Nullable<CreateNotepadInput>): Nullable<Notepad> | Promise<Nullable<Notepad>>;
 
-    abstract updateNotepad(id: string, title?: Nullable<string>, content?: Nullable<string>): Nullable<Notepad> | Promise<Nullable<Notepad>>;
+    abstract updateNotepad(id: string, updateNotepadInput?: Nullable<UpdateNotepadInput>): Nullable<Notepad> | Promise<Nullable<Notepad>>;
 
     abstract deleteNotepad(id: string): Nullable<Notepad> | Promise<Nullable<Notepad>>;
 
-    abstract createPage(notepadId: string, title: string, content: string): Nullable<Page> | Promise<Nullable<Page>>;
+    abstract createPage(createPageInput?: Nullable<CreatePageInput>): Nullable<Page> | Promise<Nullable<Page>>;
 
-    abstract updatePage(id: string, title?: Nullable<string>, content?: Nullable<string>): Nullable<Page> | Promise<Nullable<Page>>;
+    abstract updatePage(id: string, updatePageInput?: Nullable<UpdatePageInput>): Nullable<Page> | Promise<Nullable<Page>>;
 
     abstract deletePage(id: string): Nullable<Page> | Promise<Nullable<Page>>;
 }

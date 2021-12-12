@@ -35,4 +35,17 @@ export class NotepadService {
     this.notepads.push(newNotepad);
     return newNotepad;
   }
+
+  update(id: string, notepad: CreateNotepadInput): Notepad {
+    const notepadToUpdate = this.notepads.find(notepad => notepad.id === id);
+    notepadToUpdate.title = notepad.title;
+    notepadToUpdate.content = notepad.content;
+    return notepadToUpdate;
+  }
+
+  delete(id: string): Notepad {
+    const notepad = this.notepads.find(notepad => notepad.id === id);
+    this.notepads.splice(this.notepads.indexOf(notepad), 1);
+    return notepad;
+  }
 }

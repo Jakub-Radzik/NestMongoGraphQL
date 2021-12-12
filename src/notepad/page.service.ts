@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Page } from 'src/graphql';
+import {
+  CreateNotepadInput,
+  CreatePageInput,
+  Page,
+  UpdatePageInput,
+} from 'src/graphql';
 
 @Injectable()
 export class PageService {
@@ -13,5 +18,29 @@ export class PageService {
 
   findPages(notepadId: string): Page[] {
     return this.notepadsPages.filter(page => page.notepadId === notepadId);
+  }
+
+  create(createPageInput: CreatePageInput): Page {
+    const newPage = {
+      id: this.notepadsPages.length + 1 + '',
+      title: createPageInput.title,
+      content: '',
+      notepadId: createPageInput.notepadId,
+    };
+    this.notepadsPages.push(newPage);
+    return newPage;
+  }
+
+  update(id: string, updatePageInput: UpdatePageInput): Page {
+    const pageToUpdate = this.notepadsPages.find(p => p.id === id);
+    pageToUpdate.title = updatePageInput.title;
+    pageToUpdate.content = updatePageInput.content;
+    return pageToUpdate;
+  }
+
+  delete(id: string): Page {
+    const pageToDelete = this.notepadsPages.find(p => p.id === id);
+    this.notepadsPages.splice(this.notepadsPages.indexOf(pageToDelete), 1);
+    return pageToDelete;
   }
 }
