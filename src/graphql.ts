@@ -35,14 +35,6 @@ export class Notepad {
     pages?: Nullable<Nullable<Page>[]>;
 }
 
-export class Page {
-    __typename?: 'Page';
-    id: string;
-    title?: Nullable<string>;
-    content?: Nullable<string>;
-    notepadId: string;
-}
-
 export abstract class IQuery {
     __typename?: 'IQuery';
 
@@ -67,6 +59,14 @@ export abstract class IMutation {
     abstract updatePage(id: string, updatePageInput?: Nullable<UpdatePageInput>): Nullable<Page> | Promise<Nullable<Page>>;
 
     abstract deletePage(id: string): Nullable<Page> | Promise<Nullable<Page>>;
+}
+
+export class Page {
+    __typename?: 'Page';
+    id: string;
+    title?: Nullable<string>;
+    content?: Nullable<string>;
+    notepadId: string;
 }
 
 type Nullable<T> = T | null;
