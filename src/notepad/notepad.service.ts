@@ -1,51 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNotepadInput, Notepad, Page } from 'src/graphql';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateNotepadInput, Page } from 'src/graphql';
+import { Notepad, NotepadDocument } from './notepad.schema';
 
 @Injectable()
 export class NotepadService {
-  private readonly notepads: Notepad[] = [
-    { id: '1a', title: 'First notepad', content: 'First notepad content' },
-    { id: '2b', title: 'Second notepad', content: 'Second notepad content' },
-    { id: '3c', title: 'Third notepad', content: 'Third notepad content' },
-  ];
+  constructor(
+    @InjectModel(Notepad.name) private notepadModel: Model<NotepadDocument>
+  ) {}
 
-  findAll(): Notepad[] {
-    return this.notepads;
+  findAll() {
+    return this.notepadModel.find().exec();
   }
 
-  findOne(id: string): Notepad {
-    return this.notepads.find(notepad => notepad.id === id);
+  findOne(id: string) {
+    return this.notepadModel.findById(id);
   }
 
-  create(notepad: CreateNotepadInput): Notepad {
-    const newNotepad: Notepad = {
-      id: '',
-    };
-
-    do {
-      newNotepad.id = Math.random().toString(36).substring(2);
-    } while (
-      this.notepads.find(notepad => notepad.id === newNotepad.id) ||
-      !newNotepad.id
-    );
-
-    newNotepad.title = notepad.title;
-    newNotepad.content = notepad.content;
-
-    this.notepads.push(newNotepad);
-    return newNotepad;
+  create(notepad: CreateNotepadInput) {
+    const createNotepad = new this.notepadModel(notepad);
+    return createNotepad.save();
   }
 
-  update(id: string, notepad: CreateNotepadInput): Notepad {
-    const notepadToUpdate = this.notepads.find(notepad => notepad.id === id);
-    notepadToUpdate.title = notepad.title;
-    notepadToUpdate.content = notepad.content;
-    return notepadToUpdate;
+  update(id: string, notepad: CreateNotepadInput) {
+    return this.notepadModel.findByIdAndUpdate(id, notepad);
   }
 
-  delete(id: string): Notepad {
-    const notepad = this.notepads.find(notepad => notepad.id === id);
-    this.notepads.splice(this.notepads.indexOf(notepad), 1);
-    return notepad;
+  delete(id: string) {
+    return this.notepadModel.findByIdAndDelete(id);
   }
 }

@@ -24,18 +24,13 @@ export class NotepadResolver {
   ) {}
 
   @Query(returns => Notepad, { name: 'notepad', nullable: false })
-  notepad(@Args('id') id: string): Notepad {
+  notepad(@Args('id') id: string) {
     return this.notepadService.findOne(id);
   }
 
   @Query(returns => [Notepad], { name: 'notepads', nullable: 'items' })
-  notepads(): Notepad[] {
+  notepads() {
     return this.notepadService.findAll();
-  }
-
-  @ResolveField()
-  pages(@Parent() notepad: Notepad) {
-    return this.pageService.findPages(notepad.id);
   }
 
   @Mutation('createNotepad')
@@ -56,23 +51,5 @@ export class NotepadResolver {
   @Mutation('deleteNotepad')
   async deleteNotepad(@Args('id') id: string) {
     return this.notepadService.delete(id);
-  }
-
-  @Mutation('createPage')
-  async createPage(@Args('createPageInput') createPageInput: CreatePageInput) {
-    return this.pageService.create(createPageInput);
-  }
-
-  @Mutation('updatePage')
-  async updatePage(
-    @Args('id') id: string,
-    @Args('updatePageInput') updatePageInput: UpdatePageInput
-  ) {
-    return this.pageService.update(id, updatePageInput);
-  }
-
-  @Mutation('deletePage')
-  async deletePage(@Args('id') id: string) {
-    return this.pageService.delete(id);
   }
 }

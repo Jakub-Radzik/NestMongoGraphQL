@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 import {
   CreateNotepadInput,
   CreatePageInput,
@@ -8,6 +10,8 @@ import {
 
 @Injectable()
 export class PageService {
+  constructor(@InjectConnection() private connection: Connection) {}
+
   private readonly notepadsPages: Page[] = [
     { id: '1', title: 'First page', content: 'First page', notepadId: '1a' },
     { id: '2', title: 'Second page', content: 'Second page', notepadId: '1a' },

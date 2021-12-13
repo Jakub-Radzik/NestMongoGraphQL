@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NotepadModule } from './notepad/notepad.module';
+
+const login = 'admin';
+const password = 'admin';
+const db = 'OneNoteClone';
 
 @Module({
   imports: [
@@ -15,6 +21,9 @@ import { NotepadModule } from './notepad/notepad.module';
         emitTypenameField: true,
       },
     }),
+    MongooseModule.forRoot(
+      `mongodb+srv://${login}:${password}@cluster0.ab4vr.mongodb.net/${db}?retryWrites=true&w=majority`
+    ),
     NotepadModule,
   ],
   controllers: [AppController],
