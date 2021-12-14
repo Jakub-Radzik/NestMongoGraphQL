@@ -14,30 +14,26 @@ import {
   UpdatePageInput,
 } from 'src/graphql';
 import { NotepadService } from './notepad.service';
-import { PageService } from './page.service';
 
 @Resolver('Notepad')
 export class NotepadResolver {
-  constructor(
-    private notepadService: NotepadService,
-    private pageService: PageService
-  ) {}
+  constructor(private notepadService: NotepadService) {}
 
   @Query(returns => Notepad, { name: 'notepad', nullable: false })
-  notepad(@Args('id') id: string) {
-    return this.notepadService.findOne(id);
+  async notepad(@Args('id') id: string) {
+    return await this.notepadService.findOne(id);
   }
 
   @Query(returns => [Notepad], { name: 'notepads', nullable: 'items' })
-  notepads() {
-    return this.notepadService.findAll();
+  async notepads() {
+    return await this.notepadService.findAll();
   }
 
   @Mutation('createNotepad')
   async createNotepad(
     @Args('createNotepadInput') createNotepadInput: CreateNotepadInput
   ) {
-    return this.notepadService.create(createNotepadInput);
+    return await this.notepadService.create(createNotepadInput);
   }
 
   @Mutation('updateNotepad')
@@ -45,11 +41,11 @@ export class NotepadResolver {
     @Args('id') id: string,
     @Args('updateNotepadInput') updateNotepadInput: CreateNotepadInput
   ) {
-    return this.notepadService.update(id, updateNotepadInput);
+    return await this.notepadService.update(id, updateNotepadInput);
   }
 
   @Mutation('deleteNotepad')
   async deleteNotepad(@Args('id') id: string) {
-    return this.notepadService.delete(id);
+    return await this.notepadService.delete(id);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateNotepadInput, Page } from 'src/graphql';
+import { CreateNotepadInput } from 'src/graphql';
 import { Notepad, NotepadDocument } from './notepad.schema';
 
 @Injectable()
@@ -10,24 +10,27 @@ export class NotepadService {
     @InjectModel(Notepad.name) private notepadModel: Model<NotepadDocument>
   ) {}
 
-  findAll() {
-    return this.notepadModel.find().exec();
+  async findAll() {
+    return await this.notepadModel.find().populate('pages').exec();
   }
 
-  findOne(id: string) {
-    return this.notepadModel.findById(id);
+  async findOne(id: string) {
+    return await this.notepadModel.findById(id).populate('pages').exec();
   }
 
-  create(notepad: CreateNotepadInput) {
+  async create(notepad: CreateNotepadInput) {
     const createNotepad = new this.notepadModel(notepad);
-    return createNotepad.save();
+    console.dir(createNotepad);
+    return await createNotepad.save();
   }
 
-  update(id: string, notepad: CreateNotepadInput) {
-    return this.notepadModel.findByIdAndUpdate(id, notepad);
+  // TODO: update
+  async update(id: string, notepad: CreateNotepadInput) {
+    return await this.notepadModel.findByIdAndUpdate(id, notepad);
   }
 
-  delete(id: string) {
-    return this.notepadModel.findByIdAndDelete(id);
+  // TODO: delete
+  async delete(id: string) {
+    return await this.notepadModel.findByIdAndDelete(id);
   }
 }

@@ -6,20 +6,23 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { CreatePageInput, Notepad, UpdatePageInput } from 'src/graphql';
-import { PageService } from '../page.service';
+import { PageService } from './page.service';
 
 @Resolver()
 export class PageResolver {
   constructor(private pageService: PageService) {}
 
   @ResolveField()
-  pages(@Parent() notepad: Notepad) {
-    return this.pageService.findPages(notepad.id);
+  async pages(@Parent() notepad: Notepad) {
+    return await this.pageService.findPages(notepad.id);
   }
 
   @Mutation('createPage')
-  async createPage(@Args('createPageInput') createPageInput: CreatePageInput) {
-    return this.pageService.create(createPageInput);
+  async createPage(
+    @Args('notepadId') notepadId: string,
+    @Args('createPageInput') createPageInput: CreatePageInput
+  ) {
+    return await this.pageService.create(notepadId, createPageInput);
   }
 
   @Mutation('updatePage')

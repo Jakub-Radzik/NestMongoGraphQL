@@ -2,7 +2,6 @@ type Page {
   id: ID!
   title: String
   content: String
-  notepadId: ID!
 }
 
 type Query {
@@ -10,7 +9,6 @@ type Query {
 }
 
 input CreatePageInput {
-  notepadId: ID!
   title: String
 }
 
@@ -20,7 +18,7 @@ input UpdatePageInput {
 }
 
 type Mutation {
-  createPage(createPageInput: CreatePageInput): Page
+  createPage(notepadId: String, createPageInput: CreatePageInput): Page
   updatePage(id: ID!, updatePageInput: UpdatePageInput): Page
   deletePage(id: ID!): Page
 }

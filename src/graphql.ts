@@ -18,7 +18,6 @@ export class UpdateNotepadInput {
 }
 
 export class CreatePageInput {
-    notepadId: string;
     title?: Nullable<string>;
 }
 
@@ -54,7 +53,7 @@ export abstract class IMutation {
 
     abstract deleteNotepad(id: string): Nullable<Notepad> | Promise<Nullable<Notepad>>;
 
-    abstract createPage(createPageInput?: Nullable<CreatePageInput>): Nullable<Page> | Promise<Nullable<Page>>;
+    abstract createPage(notepadId?: Nullable<string>, createPageInput?: Nullable<CreatePageInput>): Nullable<Page> | Promise<Nullable<Page>>;
 
     abstract updatePage(id: string, updatePageInput?: Nullable<UpdatePageInput>): Nullable<Page> | Promise<Nullable<Page>>;
 
@@ -66,7 +65,6 @@ export class Page {
     id: string;
     title?: Nullable<string>;
     content?: Nullable<string>;
-    notepadId: string;
 }
 
 type Nullable<T> = T | null;
