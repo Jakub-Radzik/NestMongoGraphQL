@@ -4,9 +4,9 @@ import { Notepad, Page } from 'src/graphql';
 import { NotepadResolver } from './notepad.resolver';
 import { NotepadSchema } from './notepad.schema';
 import { NotepadService } from './notepad.service';
-import { PageService } from './page/page.service';
-import { PageSchema } from './page/page.schema';
 import { PageResolver } from './page/page.resolver';
+import { PageSchema } from './page/page.schema';
+import { PageService } from './page/page.service';
 
 @Module({
   imports: [
