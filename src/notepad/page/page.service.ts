@@ -1,14 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
-import {
-  CreateNotepadInput,
-  CreatePageInput,
-  UpdatePageInput,
-} from 'src/graphql';
-import { Notepad, NotepadDocument } from '../notepad.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreatePageInput, UpdatePageInput } from 'src/graphql';
 import { NotepadService } from '../notepad.service';
-import { PageDocument, Page } from './page.schema';
+import { Page, PageDocument } from './page.schema';
 
 @Injectable()
 export class PageService {
@@ -33,11 +28,11 @@ export class PageService {
     return createdPage;
   }
 
-  update(id: string, updatePageInput: UpdatePageInput) {
-    return null;
+  async update(id: string, updatePageInput: UpdatePageInput) {
+    return await this.pageModel.findByIdAndUpdate(id, updatePageInput);
   }
 
-  delete(id: string) {
-    return null;
+  async delete(id: string) {
+    return await this.pageModel.findByIdAndDelete(id);
   }
 }

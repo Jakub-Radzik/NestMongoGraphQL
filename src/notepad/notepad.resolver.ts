@@ -1,18 +1,5 @@
-import { ParseIntPipe } from '@nestjs/common';
-import {
-  Args,
-  Resolver,
-  Query,
-  ResolveField,
-  Parent,
-  Mutation,
-} from '@nestjs/graphql';
-import {
-  CreateNotepadInput,
-  CreatePageInput,
-  Notepad,
-  UpdatePageInput,
-} from 'src/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateNotepadInput, Notepad } from 'src/graphql';
 import { NotepadService } from './notepad.service';
 
 @Resolver('Notepad')
